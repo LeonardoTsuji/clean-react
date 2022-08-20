@@ -16,7 +16,8 @@ type Props = {
 const Login: React.FC<Props> = ({ validation }: Props) => {
   const [state, setState] = useState({
     loading: false,
-    email: ''
+    email: '',
+    password: ''
 
   })
   const [errorState, setErrorState] = useState({
@@ -29,6 +30,11 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
     validation.validate({ email: state.email }
     )
   }, [state.email])
+
+  useEffect(() => {
+    validation.validate({ password: state.password }
+    )
+  }, [state.password])
 
   return (
     <div className={styles.login}>
