@@ -51,7 +51,7 @@ describe('Login Component', () => {
     const emailInput = getByTestId('email')
     fireEvent.input(emailInput, { target: { value: email } })
     const emailStatus = getByTestId('email-status')
-    expect(emailStatus.title).toBe({ validationError })
+    expect(emailStatus.title).toBe(validationError)
     expect(emailStatus.textContent).toBe('🔴')
   })
 
@@ -65,7 +65,7 @@ describe('Login Component', () => {
     const passwordInput = getByTestId('password')
     fireEvent.input(passwordInput, { target: { value: password } })
     const passwordStatus = getByTestId('password-status')
-    expect(passwordStatus.title).toBe({ validationError })
+    expect(passwordStatus.title).toBe(validationError)
     expect(passwordStatus.textContent).toBe('🔴')
   })
 
