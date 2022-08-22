@@ -1,5 +1,5 @@
 import React from 'react'
-import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom'
+import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import { faker } from '@faker-js/faker'
 import { cleanup, fireEvent, Matcher, MatcherOptions, render, RenderResult, waitFor } from '@testing-library/react'
@@ -17,15 +17,17 @@ type SutParams = {
   validationError: string
 }
 
-const history = createMemoryHistory()
+const history = createMemoryHistory({
+  initialEntries: ['/login']
+})
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   const authenticationSpy = new AuthenticationSpy()
   validationStub.errorMessage = params?.validationError
   const sut = render(
-  <HistoryRouter history={history}>
-    <Login validation={validationStub} authentication={authenticationSpy}/>
-  </HistoryRouter>
+    <Router location={history.location} navigator={history}>
+      <Login validation={validationStub} authentication={authenticationSpy}/>
+    </Router>
   )
   return {
     sut,
@@ -194,6 +196,9 @@ describe('Login Component', () => {
     await waitFor(() => getByTestId('form'))
 
     expect(localStorage.setItem).toHaveBeenCalledWith('accessToken', authenticationSpy.account.accessToken)
+
+    expect(history.index).toBe(0)
+    expect(history.location.pathname).toBe('/')
   })
 
   test('Should go to SignUp page', async () => {
