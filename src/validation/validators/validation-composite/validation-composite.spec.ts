@@ -28,7 +28,7 @@ describe('ValidationComposite', () => {
     fieldValidationsSpy[0].error = new Error(errorMessage)
     fieldValidationsSpy[1].error = new Error(faker.random.words())
     const error = sut.validate(fieldName, faker.random.word())
-    expect(error).toBe(error)
+    expect(error).toBe(errorMessage)
   })
 
   test('Should return falsy if validation succeeds', () => {
