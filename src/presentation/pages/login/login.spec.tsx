@@ -145,6 +145,7 @@ describe('Login Component', () => {
     const { getByTestId } = sut
 
     await simulateValidSubmit(getByTestId)
+    await simulateValidSubmit(getByTestId)
 
     expect(authenticationSpy.callsCount).toBe(1)
   })
