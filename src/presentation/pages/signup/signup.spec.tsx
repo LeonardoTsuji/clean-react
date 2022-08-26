@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, fireEvent, Matcher, MatcherOptions, render, RenderResult } from '@testing-library/react'
+import { cleanup, render, RenderResult } from '@testing-library/react'
 import { faker } from '@faker-js/faker'
 import { Helper, ValidationStub } from '@/presentation/test'
 import SignUp from './signup'
@@ -26,11 +26,6 @@ const makeSut = (params?: SutParams): SutTypes => {
   }
 }
 
-const populateField = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, fieldName: string, value = faker.datatype.string()): void => {
-  const input = getByTestId(fieldName)
-  fireEvent.input(input, { target: { value } })
-}
-
 describe('SignUp Component', () => {
   afterEach(cleanup)
 
@@ -54,7 +49,7 @@ describe('SignUp Component', () => {
 
     const { getByTestId } = sut
 
-    populateField(getByTestId, 'name')
+    Helper.populateField(getByTestId, 'name')
     Helper.testStatusForField(getByTestId, 'name', validationError)
   })
 })

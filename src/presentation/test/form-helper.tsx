@@ -1,4 +1,5 @@
-import { Matcher, MatcherOptions } from '@testing-library/react'
+import { faker } from '@faker-js/faker'
+import { fireEvent, Matcher, MatcherOptions } from '@testing-library/react'
 
 export const testChildCount = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, fieldName: string, count: number): void => {
   const el = getByTestId(fieldName)
@@ -14,4 +15,9 @@ export const testStatusForField = (getByTestId: (id: Matcher, options?: MatcherO
   const fieldNameStatus = getByTestId(`${fieldName}-status`)
   expect(fieldNameStatus.title).toBe(validationError || 'Tudo certo')
   expect(fieldNameStatus.textContent).toBe(validationError ? '🔴' : '🟢')
+}
+
+export const populateField = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, fieldName: string, value = faker.datatype.string()): void => {
+  const input = getByTestId(fieldName)
+  fireEvent.input(input, { target: { value } })
 }

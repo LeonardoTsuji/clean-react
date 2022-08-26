@@ -41,19 +41,9 @@ const makeSut = (params?: SutParams): SutTypes => {
   }
 }
 
-const populateEmailField = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, email = faker.internet.email()): void => {
-  const emailInput = getByTestId('email')
-  fireEvent.input(emailInput, { target: { value: email } })
-}
-
-const populatePasswordField = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, password = faker.internet.password()): void => {
-  const passwordInput = getByTestId('password')
-  fireEvent.input(passwordInput, { target: { value: password } })
-}
-
 const simulateValidSubmit = async (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, email = faker.internet.email(), password = faker.internet.password()): Promise<void> => {
-  populateEmailField(getByTestId, email)
-  populatePasswordField(getByTestId, password)
+  Helper.populateField(getByTestId, 'email', email)
+  Helper.populateField(getByTestId, 'password', password)
 
   const form = getByTestId('form')
   fireEvent.submit(form)
@@ -93,7 +83,7 @@ describe('Login Component', () => {
 
     const { getByTestId } = sut
 
-    populateEmailField(getByTestId)
+    Helper.populateField(getByTestId, 'password')
     Helper.testStatusForField(getByTestId, 'email', validationError)
   })
 
@@ -103,7 +93,7 @@ describe('Login Component', () => {
 
     const { getByTestId } = sut
 
-    populatePasswordField(getByTestId)
+    Helper.populateField(getByTestId, 'password')
     Helper.testStatusForField(getByTestId, 'password', validationError)
   })
 
@@ -111,7 +101,8 @@ describe('Login Component', () => {
     const { sut } = makeSut()
     const { getByTestId } = sut
 
-    populateEmailField(getByTestId)
+    Helper.populateField(getByTestId, 'email')
+
     Helper.testStatusForField(getByTestId, 'email')
   })
 
@@ -119,7 +110,7 @@ describe('Login Component', () => {
     const { sut } = makeSut()
     const { getByTestId } = sut
 
-    populatePasswordField(getByTestId)
+    Helper.populateField(getByTestId, 'password')
     Helper.testStatusForField(getByTestId, 'password')
   })
 
@@ -127,8 +118,8 @@ describe('Login Component', () => {
     const { sut } = makeSut()
     const { getByTestId } = sut
 
-    populateEmailField(getByTestId)
-    populatePasswordField(getByTestId)
+    Helper.populateField(getByTestId, 'email')
+    Helper.populateField(getByTestId, 'password')
 
     Helper.testButtonIsDisabled(getByTestId, 'submit', false)
   })
