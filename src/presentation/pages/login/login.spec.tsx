@@ -102,7 +102,6 @@ describe('Login Component', () => {
     const { getByTestId } = sut
 
     Helper.populateField(getByTestId, 'email')
-
     Helper.testStatusForField(getByTestId, 'email')
   })
 
