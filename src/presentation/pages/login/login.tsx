@@ -7,9 +7,9 @@ import {
   LoginHeader
 } from '@/presentation/components'
 import Context from '@/presentation/contexts/form/form-contexts'
-import styles from './login-styles.scss'
 import { Validation } from '@/presentation/protocols/validation'
 import { Authentication, SaveAccessToken } from '@/domain/usecases'
+import styles from './login-styles.scss'
 
 type Props = {
   validation: Validation
