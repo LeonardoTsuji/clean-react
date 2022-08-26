@@ -21,3 +21,8 @@ export const populateField = (getByTestId: (id: Matcher, options?: MatcherOption
   const input = getByTestId(fieldName)
   fireEvent.input(input, { target: { value } })
 }
+
+export const testElementExists = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, fieldName: string): void => {
+  const el = getByTestId(fieldName)
+  expect(el).toBeTruthy()
+}

@@ -51,11 +51,6 @@ const simulateValidSubmit = async (getByTestId: (id: Matcher, options?: MatcherO
   await waitFor(() => form)
 }
 
-const testElementExists = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, fieldName: string): void => {
-  const el = getByTestId(fieldName)
-  expect(el).toBeTruthy()
-}
-
 const testElementText = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, fieldName: string, text: string): void => {
   const el = getByTestId(fieldName)
   expect(el).toBeTruthy()
@@ -128,7 +123,7 @@ describe('Login Component', () => {
     const { getByTestId } = sut
 
     await simulateValidSubmit(getByTestId)
-    testElementExists(getByTestId, 'spinner')
+    Helper.testElementExists(getByTestId, 'spinner')
   })
 
   test('Should call Authentication with correct values', async () => {

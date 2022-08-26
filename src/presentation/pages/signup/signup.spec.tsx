@@ -38,11 +38,6 @@ const simulateValidSubmit = async (getByTestId: (id: Matcher, options?: MatcherO
   await waitFor(() => form)
 }
 
-const testElementExists = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, fieldName: string): void => {
-  const el = getByTestId(fieldName)
-  expect(el).toBeTruthy()
-}
-
 describe('SignUp Component', () => {
   afterEach(cleanup)
 
@@ -149,6 +144,6 @@ describe('SignUp Component', () => {
     const { getByTestId } = sut
 
     await simulateValidSubmit(getByTestId)
-    testElementExists(getByTestId, 'spinner')
+    Helper.testElementExists(getByTestId, 'spinner')
   })
 })
