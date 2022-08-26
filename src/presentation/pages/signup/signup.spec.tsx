@@ -44,12 +44,6 @@ const simulateValidSubmit = async (getByTestId: (id: Matcher, options?: MatcherO
   await waitFor(() => form)
 }
 
-const testElementText = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, fieldName: string, text: string): void => {
-  const el = getByTestId(fieldName)
-  expect(el).toBeTruthy()
-  expect(el.textContent).toBe(text)
-}
-
 describe('SignUp Component', () => {
   afterEach(cleanup)
 
@@ -205,7 +199,7 @@ describe('SignUp Component', () => {
     await simulateValidSubmit(getByTestId)
 
     await waitFor(async () => {
-      testElementText(getByTestId, 'main-error', error.message)
+      Helper.testElementText(getByTestId, 'main-error', error.message)
     })
     Helper.testChildCount(getByTestId, 'error-wrap', 1)
   })

@@ -26,3 +26,9 @@ export const testElementExists = (getByTestId: (id: Matcher, options?: MatcherOp
   const el = getByTestId(fieldName)
   expect(el).toBeTruthy()
 }
+
+export const testElementText = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, fieldName: string, text: string): void => {
+  const el = getByTestId(fieldName)
+  expect(el).toBeTruthy()
+  expect(el.textContent).toBe(text)
+}
