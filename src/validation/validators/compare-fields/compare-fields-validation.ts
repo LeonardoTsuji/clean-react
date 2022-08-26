@@ -8,6 +8,6 @@ export class CompareFieldsValidation implements FieldValidation {
   ) {}
 
   validate (value: any): Error {
-    return new InvalidFieldError()
+    return value !== this.valueToCompare ? new InvalidFieldError() : null
   }
 }
