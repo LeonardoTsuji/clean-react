@@ -9,14 +9,15 @@ import {
 import Context from '@/presentation/contexts/form/form-contexts'
 import styles from './login-styles.scss'
 import { Validation } from '@/presentation/protocols/validation'
-import { Authentication } from '@/domain/usecases'
+import { Authentication, SaveAccessToken } from '@/domain/usecases'
 
 type Props = {
   validation: Validation
   authentication: Authentication
+  saveAccessToken: SaveAccessToken
 }
 
-const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
+const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }: Props) => {
   const navigate = useNavigate()
   const [state, setState] = useState({
     loading: false,
@@ -47,7 +48,7 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
         loading: true
       })
       const account = await authentication.auth({ email: state.email, password: state.password })
-      localStorage.setItem('accessToken', account.accessToken)
+      await saveAccessToken.save(account.accessToken)
       navigate('/', {
         replace: true
       })
