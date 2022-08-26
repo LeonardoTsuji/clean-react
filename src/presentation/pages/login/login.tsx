@@ -27,7 +27,7 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
   })
   const [errorState, setErrorState] = useState({
     email: '',
-    password: 'Campo obrigatório',
+    password: '',
     main: ''
   })
 
