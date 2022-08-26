@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   Footer,
   FormStatus,
@@ -82,7 +82,8 @@ const SignUp: React.FC<Props> = ({ validation, addAccount, saveAccessToken }: Pr
           <Input type='password' name='password' placeholder='Digite sua senha'/>
           <Input type='password' name='passwordConfirmation' placeholder='Repita sua senha'/>
           <button data-testid='submit' disabled={!!errorState.name || !!errorState.email || !!errorState.password || !!errorState.passwordConfirmation} className={styles.submit} type='submit'>Entrar</button>
-          <span className={styles.link}>Voltar para Login</span>
+          <Link data-testid='login-link' to='/login' className={styles.link}>Voltar para Login</Link>
+
           <FormStatus />
         </form>
       </Context.Provider>
