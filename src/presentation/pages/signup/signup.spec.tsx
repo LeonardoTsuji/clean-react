@@ -242,4 +242,14 @@ describe('SignUp Component', () => {
     })
     Helper.testChildCount(getByTestId, 'error-wrap', 1)
   })
+
+  test('Should go to Login page', async () => {
+    const { sut } = makeSut()
+    const { getByTestId } = sut
+
+    const loginLink = getByTestId('login-link')
+    fireEvent.click(loginLink)
+    expect(history.index).toBe(1)
+    expect(history.location.pathname).toBe('/login')
+  })
 })
