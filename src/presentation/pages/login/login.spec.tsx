@@ -3,7 +3,7 @@ import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import { faker } from '@faker-js/faker'
 import { cleanup, fireEvent, Matcher, MatcherOptions, render, RenderResult, waitFor } from '@testing-library/react'
-import { AuthenticationSpy, ValidationStub, SaveAccessTokenMock } from '@/presentation/test'
+import { AuthenticationSpy, ValidationStub, SaveAccessTokenMock, Helper } from '@/presentation/test'
 import Login from './login'
 import { InvalidCredentialsError } from '@/domain/errors'
 
@@ -61,17 +61,6 @@ const simulateValidSubmit = async (getByTestId: (id: Matcher, options?: MatcherO
   await waitFor(() => form)
 }
 
-const testStatusForField = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, fieldName: string, validationError?: string): void => {
-  const emailStatus = getByTestId(`${fieldName}-status`)
-  expect(emailStatus.title).toBe(validationError || 'Tudo certo')
-  expect(emailStatus.textContent).toBe(validationError ? '🔴' : '🟢')
-}
-
-const testErrorWrapChildCount = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, count: number): void => {
-  const errorWrap = getByTestId('error-wrap')
-  expect(errorWrap.childElementCount).toBe(count)
-}
-
 const testElementExists = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, fieldName: string): void => {
   const el = getByTestId(fieldName)
   expect(el).toBeTruthy()
@@ -83,11 +72,6 @@ const testElementText = (getByTestId: (id: Matcher, options?: MatcherOptions) =>
   expect(el.textContent).toBe(text)
 }
 
-const testButtonIsDisabled = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, fieldName: string, isDisabled: boolean): void => {
-  const button = getByTestId(fieldName) as HTMLButtonElement
-  expect(button.disabled).toBe(isDisabled)
-}
-
 describe('Login Component', () => {
   afterEach(cleanup)
 
@@ -96,11 +80,11 @@ describe('Login Component', () => {
     const { sut } = makeSut({ validationError })
     const { getByTestId } = sut
 
-    testErrorWrapChildCount(getByTestId, 0)
-    testButtonIsDisabled(getByTestId, 'submit', true)
+    Helper.testChildCount(getByTestId, 'error-wrap', 0)
+    Helper.testButtonIsDisabled(getByTestId, 'submit', true)
 
-    testStatusForField(getByTestId, 'email', validationError)
-    testStatusForField(getByTestId, 'password', validationError)
+    Helper.testStatusForField(getByTestId, 'email', validationError)
+    Helper.testStatusForField(getByTestId, 'password', validationError)
   })
 
   test('Should show email error if Validation fails', () => {
@@ -110,7 +94,7 @@ describe('Login Component', () => {
     const { getByTestId } = sut
 
     populateEmailField(getByTestId)
-    testStatusForField(getByTestId, 'email', validationError)
+    Helper.testStatusForField(getByTestId, 'email', validationError)
   })
 
   test('Should show password error if Validation fails', () => {
@@ -120,7 +104,7 @@ describe('Login Component', () => {
     const { getByTestId } = sut
 
     populatePasswordField(getByTestId)
-    testStatusForField(getByTestId, 'password', validationError)
+    Helper.testStatusForField(getByTestId, 'password', validationError)
   })
 
   test('Should show valid email state if Validation succeeds', () => {
@@ -128,7 +112,7 @@ describe('Login Component', () => {
     const { getByTestId } = sut
 
     populateEmailField(getByTestId)
-    testStatusForField(getByTestId, 'email')
+    Helper.testStatusForField(getByTestId, 'email')
   })
 
   test('Should show valid password state if Validation succeeds', () => {
@@ -136,7 +120,7 @@ describe('Login Component', () => {
     const { getByTestId } = sut
 
     populatePasswordField(getByTestId)
-    testStatusForField(getByTestId, 'password')
+    Helper.testStatusForField(getByTestId, 'password')
   })
 
   test('Should enable submit button if form is valid', () => {
@@ -146,7 +130,7 @@ describe('Login Component', () => {
     populateEmailField(getByTestId)
     populatePasswordField(getByTestId)
 
-    testButtonIsDisabled(getByTestId, 'submit', false)
+    Helper.testButtonIsDisabled(getByTestId, 'submit', false)
   })
 
   test('Should show spinner on submit', async () => {
@@ -201,7 +185,7 @@ describe('Login Component', () => {
     await waitFor(async () => {
       testElementText(getByTestId, 'main-error', error.message)
     })
-    testErrorWrapChildCount(getByTestId, 1)
+    Helper.testChildCount(getByTestId, 'error-wrap', 1)
   })
 
   test('Should call SaveAccessToken on success', async () => {
@@ -228,7 +212,7 @@ describe('Login Component', () => {
     await waitFor(() => {
       testElementText(getByTestId, 'main-error', error.message)
     })
-    testErrorWrapChildCount(getByTestId, 1)
+    Helper.testChildCount(getByTestId, 'error-wrap', 1)
   })
 
   test('Should go to SignUp page', async () => {
