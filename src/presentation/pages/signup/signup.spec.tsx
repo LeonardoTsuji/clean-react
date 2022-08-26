@@ -40,7 +40,7 @@ describe('SignUp Component', () => {
     Helper.testStatusForField(getByTestId, 'name', validationError)
     Helper.testStatusForField(getByTestId, 'email', validationError)
     Helper.testStatusForField(getByTestId, 'password', validationError)
-    Helper.testStatusForField(getByTestId, 'passwordConfirmation', 'Campo obrigatório')
+    Helper.testStatusForField(getByTestId, 'passwordConfirmation', validationError)
   })
 
   test('Should show name error if Validation fails', () => {
@@ -71,5 +71,15 @@ describe('SignUp Component', () => {
 
     Helper.populateField(getByTestId, 'password')
     Helper.testStatusForField(getByTestId, 'password', validationError)
+  })
+
+  test('Should show passwordConfirmation error if Validation fails', () => {
+    const validationError = faker.random.words()
+    const { sut } = makeSut({ validationError })
+
+    const { getByTestId } = sut
+
+    Helper.populateField(getByTestId, 'passwordConfirmation')
+    Helper.testStatusForField(getByTestId, 'passwordConfirmation', validationError)
   })
 })
