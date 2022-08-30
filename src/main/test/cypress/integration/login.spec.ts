@@ -100,4 +100,17 @@ describe('Login', () => {
     cy.getByTestId('main-error').should('contain.text', 'Algo de errado aconteceu. Tente novamente em breve.')
     cy.url().should('eq', `${baseUrl}/login`)
   })
+
+  it('Should prevent multiple submits', () => {
+    cy.intercept('POST', /login/, {
+      statusCode: 200,
+      body: {
+        invalidProperty: faker.datatype.uuid()
+      }
+    }).as('request')
+    cy.getByTestId('email').type(faker.internet.email())
+    cy.getByTestId('password').type(faker.datatype.string(5))
+    cy.getByTestId('submit').dblclick()
+    cy.get('@request.all').should('have.length', 1)
+  })
 })
