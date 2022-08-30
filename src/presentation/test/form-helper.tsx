@@ -11,10 +11,13 @@ export const testButtonIsDisabled = (getByTestId: (id: Matcher, options?: Matche
   expect(button.disabled).toBe(isDisabled)
 }
 
-export const testStatusForField = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, fieldName: string, validationError?: string): void => {
-  const fieldNameStatus = getByTestId(`${fieldName}-status`)
-  expect(fieldNameStatus.title).toBe(validationError || 'Tudo certo')
-  expect(fieldNameStatus.textContent).toBe(validationError ? '🔴' : '🟢')
+export const testStatusForField = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, fieldName: string, validationError: string = ''): void => {
+  const wrap = getByTestId(`${fieldName}-wrap`)
+  const field = getByTestId(fieldName)
+  const label = getByTestId(`${fieldName}-label`)
+  expect(wrap.getAttribute('data-status')).toBe(validationError ? 'invalid' : 'valid')
+  expect(field.title).toBe(validationError)
+  expect(label.title).toBe(validationError)
 }
 
 export const populateField = (getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement, fieldName: string, value = faker.datatype.string()): void => {

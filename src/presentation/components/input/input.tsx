@@ -18,24 +18,28 @@ const Input: React.FC<Props> = (props: Props) => {
   }
 
   return (
-    <div className={styles.inputWrap}>
+    <div
+      data-testid={`${props.name}-wrap`}
+      className={styles.inputWrap}
+      data-status={error ? 'invalid' : 'valid'}
+    >
       <input
         {...props}
         id={props.name}
+        title={error}
         data-testid={props.name}
         type={props.type}
         name={props.name}
         placeholder=" "
         onChange={handleChange}
       />
-      <label htmlFor={props.name}>{props.placeholder}</label>
-      <span
-        data-testid={`${props.name}-status`}
-        title={error || 'Tudo certo'}
-        className={styles.status}
+      <label
+        data-testid={`${props.name}-label`}
+        htmlFor={props.name}
+        title={error}
       >
-        {error ? '🔴' : '🟢'}
-      </span>
+        {props.placeholder}
+      </label>
     </div>
   )
 }
