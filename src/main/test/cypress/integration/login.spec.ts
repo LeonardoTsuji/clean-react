@@ -79,8 +79,7 @@ describe('Login', () => {
       body: { error: faker.random.word() }
     })
     cy.getByTestId('email').type(faker.internet.email())
-    cy.getByTestId('password').type(faker.datatype.string(5))
-    cy.getByTestId('submit').click()
+    cy.getByTestId('password').type(faker.datatype.string(5)).type('{enter}')
     cy.getByTestId('spinner').should('not.exist')
     cy.getByTestId('main-error').should('contain.text', 'Algo de errado aconteceu. Tente novamente em breve.')
     cy.url().should('eq', `${baseUrl}/login`)
