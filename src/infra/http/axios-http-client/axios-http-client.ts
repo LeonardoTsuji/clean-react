@@ -3,7 +3,7 @@ import { HttpGetClient, HttpGetParams, HttpPostClient, HttpPostParams, HttpRespo
 
 export class AxiosHttpClient implements HttpPostClient, HttpGetClient {
   async post ({ url, body }: HttpPostParams): Promise<HttpResponse> {
-    let axiosResponse: AxiosResponse<any>
+    let axiosResponse: AxiosResponse
     try {
       axiosResponse = await axios.post(url, body)
     } catch (error) {
@@ -17,7 +17,12 @@ export class AxiosHttpClient implements HttpPostClient, HttpGetClient {
   }
 
   async get ({ url }: HttpGetParams): Promise<HttpResponse> {
-    const axiosResponse = await axios.get(url)
+    let axiosResponse: AxiosResponse
+    try {
+      axiosResponse = await axios.get(url)
+    } catch (error) {
+      axiosResponse = error.response
+    }
     return {
       statusCode: axiosResponse.status,
       body: axiosResponse.data
