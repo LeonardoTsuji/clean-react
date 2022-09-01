@@ -20,36 +20,38 @@ const makeSut = (): SutTypes => {
 }
 
 describe('AxiosHttpClient', () => {
-  test('Should call axios with correct values', async () => {
-    const { url, body } = mockPostRequest()
-    const { sut, mockedAxios } = makeSut()
-    await sut.post({
-      url,
-      body
+  describe('post', () => {
+    test('Should call axios with correct values', async () => {
+      const { url, body } = mockPostRequest()
+      const { sut, mockedAxios } = makeSut()
+      await sut.post({
+        url,
+        body
+      })
+      expect(mockedAxios.post).toHaveBeenCalledWith(url, body)
     })
-    expect(mockedAxios.post).toHaveBeenCalledWith(url, body)
-  })
 
-  test('Should return the correct statusCode and body', () => {
-    const { url, body } = mockPostRequest()
-    const { sut, mockedAxios } = makeSut()
-    const httpResponse = sut.post({
-      url,
-      body
+    test('Should return correct response on axios.post', () => {
+      const { url, body } = mockPostRequest()
+      const { sut, mockedAxios } = makeSut()
+      const httpResponse = sut.post({
+        url,
+        body
+      })
+      expect(httpResponse).toEqual(mockedAxios.post.mock.results[0].value)
     })
-    expect(httpResponse).toEqual(mockedAxios.post.mock.results[0].value)
-  })
 
-  test('Should return the correct statusCode and body on failure', () => {
-    const { url, body } = mockPostRequest()
-    const { sut, mockedAxios } = makeSut()
-    mockedAxios.post.mockRejectedValueOnce({
-      response: mockHttpResponse()
+    test('Should return correct error on axios.post', () => {
+      const { url, body } = mockPostRequest()
+      const { sut, mockedAxios } = makeSut()
+      mockedAxios.post.mockRejectedValueOnce({
+        response: mockHttpResponse()
+      })
+      const httpResponse = sut.post({
+        url,
+        body
+      })
+      expect(httpResponse).toEqual(mockedAxios.post.mock.results[0].value)
     })
-    const httpResponse = sut.post({
-      url,
-      body
-    })
-    expect(httpResponse).toEqual(mockedAxios.post.mock.results[0].value)
   })
 })
