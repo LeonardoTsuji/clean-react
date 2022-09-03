@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {
   Footer,
@@ -7,18 +7,18 @@ import {
   LoginHeader,
   SubmitButton
 } from '@/presentation/components'
-import Context from '@/presentation/contexts/form/form-contexts'
+import { FormContext, ApiContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols/validation'
-import { Authentication, UpdateCurrentAccount } from '@/domain/usecases'
+import { Authentication } from '@/domain/usecases'
 import styles from './login-styles.scss'
 
 type Props = {
   validation: Validation
   authentication: Authentication
-  updateCurrentAccount: UpdateCurrentAccount
 }
 
-const Login: React.FC<Props> = ({ validation, authentication, updateCurrentAccount }: Props) => {
+const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
+  const { setCurrentAccount } = useContext(ApiContext)
   const navigate = useNavigate()
   const [state, setState] = useState({
     loading: false,
@@ -56,7 +56,7 @@ const Login: React.FC<Props> = ({ validation, authentication, updateCurrentAccou
         loading: true
       })
       const account = await authentication.auth({ email: state.email, password: state.password })
-      await updateCurrentAccount.save(account)
+      setCurrentAccount(account)
       navigate('/', {
         replace: true
       })
@@ -72,7 +72,7 @@ const Login: React.FC<Props> = ({ validation, authentication, updateCurrentAccou
   return (
     <div className={styles.loginWrap}>
       <LoginHeader />
-      <Context.Provider value={{ state, errorState, setState, setErrorState }}>
+      <FormContext.Provider value={{ state, errorState, setState, setErrorState }}>
         <form data-testid='form' className={styles.form} onSubmit={handleSubmit}>
           <h2>Login</h2>
           <Input type='email' name='email' placeholder='Digite seu e-mail'/>
@@ -81,7 +81,7 @@ const Login: React.FC<Props> = ({ validation, authentication, updateCurrentAccou
           <Link data-testid='signup-link' to='/signup' className={styles.link}>Criar conta</Link>
           <FormStatus />
         </form>
-      </Context.Provider>
+      </FormContext.Provider>
 
       <Footer />
     </div>
