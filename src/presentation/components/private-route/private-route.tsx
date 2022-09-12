@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
 import { ApiContext } from '@/presentation/contexts'
 
-const PrivateRoute: React.FC = ({ children }: any) => {
+const PrivateRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const { getCurrentAccount } = useContext(ApiContext)
 
   const token = getCurrentAccount()?.accessToken
