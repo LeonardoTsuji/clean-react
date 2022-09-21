@@ -25,6 +25,7 @@
     "@typescript-eslint/method-signature-style": "off",
     "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-namespace": "off",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error"
   }

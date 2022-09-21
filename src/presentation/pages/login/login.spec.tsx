@@ -3,15 +3,16 @@ import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import { faker } from '@faker-js/faker'
 import { fireEvent, waitFor, render, screen } from '@testing-library/react'
-import { AuthenticationSpy, ValidationStub, Helper } from '@/presentation/test'
+import { ValidationStub, Helper } from '@/presentation/test'
+import { AuthenticationSpy } from '@/domain/test'
 import { ApiContext } from '@/presentation/contexts'
 import { InvalidCredentialsError } from '@/domain/errors'
 import Login from './login'
-import { AccountModel } from '@/domain/models'
+import { Authentication } from '@/domain/usecases'
 
 type SutTypes = {
   authenticationSpy: AuthenticationSpy
-  setCurrentAccountMock: (account: AccountModel) => void
+  setCurrentAccountMock: (account: Authentication.Model) => void
 }
 
 type SutParams = {
