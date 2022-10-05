@@ -15,7 +15,8 @@ jobs:
         with:
           node-version: '14'
           registry-url: https://registry.npmjs.org/
-          
+      - name: install
+        run: npm install
       - name: eslint
         run: npx eslint 'src/**'
       - name: test
