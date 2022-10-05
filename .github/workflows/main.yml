@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: eslint
-        run: eslint 'src/**'
+        run: npx eslint 'src/**'
       - name: test
         run: npm run test:ci
   Deploy-Production:
