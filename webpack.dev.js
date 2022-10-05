@@ -34,7 +34,8 @@ module.exports = merge(common, {
       rewrites: [
         { from: /./, to: '/index.html' }
       ]
-    }
+    },
+    port: 8080
   },
   plugins: [
     new DefinePlugin({
