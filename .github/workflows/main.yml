@@ -22,18 +22,9 @@ jobs:
         run: npx eslint 'src/**'
       - name: test
         run: npm run test:ci
-  cypress-run:
-    runs-on: ubuntu-20.04
-    needs: test
-    name: E2E on Chrome
-    steps:
-      - uses: actions/checkout@v2
-      - uses: cypress-io/github-action@v4
-        with:
-          browser: chrome
   Deploy-Production:
     runs-on: ubuntu-latest
-    needs: [test, cypress-run]
+    needs: test
     steps:
       - uses: actions/checkout@v2
       - name: Install Vercel CLI
