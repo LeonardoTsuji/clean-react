@@ -32,7 +32,7 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           test: npm run test:cypress:ci
-        wait-on: 'http://localhost:8080'
+          wait-on: 'http://localhost:8080'
   Deploy-Production:
     runs-on: ubuntu-latest
     needs: [test, cypress-run]
