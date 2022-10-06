@@ -82,7 +82,6 @@ describe('SignUp', () => {
     simulateValidSubmit()
     cy.getByTestId('main-error').should('not.exist')
     cy.getByTestId('spinner').should('not.exist')
-    Helper.testUrl('/')
     Helper.testLocalStorageItem('account')
   })
 
