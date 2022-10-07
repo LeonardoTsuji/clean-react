@@ -6,6 +6,13 @@
   width: 80px;
   height: 80px;
 
+  &.negative {
+    div {
+      border: 8px solid $white;
+      border-color: $white transparent transparent transparent;
+    }
+  }
+
   div {
     box-sizing: border-box;
     display: block;
