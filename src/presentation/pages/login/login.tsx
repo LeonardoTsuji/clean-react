@@ -39,33 +39,33 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
     }
     const email = validation.validate('email', formData)
     const password = validation.validate('password', formData)
-    setErrorState({
-      ...errorState,
+    setErrorState(old => ({
+      ...old,
       email,
       password,
       isFormInvalid: !!email || !!password
-    })
+    }))
   }, [state.email, state.password])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
     try {
       if (state.loading || errorState.isFormInvalid) return
-      setState({
-        ...state,
+      setState(old => ({
+        ...old,
         loading: true
-      })
+      }))
       const account = await authentication.auth({ email: state.email, password: state.password })
       setCurrentAccount(account)
       navigate('/', {
         replace: true
       })
     } catch (error) {
-      setState({
-        ...state,
+      setState(old => ({
+        ...old,
         loading: false
-      })
-      setErrorState({ ...errorState, main: error.message })
+      }))
+      setErrorState(old => ({ ...old, main: error.message }))
     }
   }
 

@@ -46,24 +46,24 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
     const password = validation.validate('password', formData)
     const passwordConfirmation = validation.validate('passwordConfirmation', formData)
 
-    setErrorState({
-      ...errorState,
+    setErrorState(old => ({
+      ...old,
       name,
       email,
       password,
       passwordConfirmation,
       isFormInvalid: !!name || !!email || !!password || !!passwordConfirmation
-    })
+    }))
   }, [state.name, state.email, state.password, state.passwordConfirmation])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
     try {
       if (state.loading || errorState.isFormInvalid) return
-      setState({
-        ...state,
+      setState(old => ({
+        ...old,
         loading: true
-      })
+      }))
       const account = await addAccount.add({
         name: state.name,
         email: state.email,
@@ -75,11 +75,11 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
         replace: true
       })
     } catch (error) {
-      setState({
-        ...state,
+      setState(old => ({
+        ...old,
         loading: false
-      })
-      setErrorState({ ...errorState, main: error.message })
+      }))
+      setErrorState(old => ({ ...old, main: error.message }))
     }
   }
 
