@@ -8,28 +8,33 @@ const SurveyResult: React.FC = () => {
     <div className={styles.surveyResultWrap}>
       <Header />
       <div className={styles.contentWrap}>
-        <hgroup>
-          <Calendar date={new Date()} className={styles.calendarWrap}/>
-          <h2>Qual é seu framework web favorito?</h2>
-        </hgroup>
-        <FlipMove className={styles.answersList}>
-          <li className={styles.active}>
-            <img src="" alt="" />
-            <span className={styles.answer}>ReactJS</span>
-            <span className={styles.percent}>50%</span>
-          </li>
-          <li>
-            <img src="" alt="" />
-            <span className={styles.answer}>ReactJS</span>
-            <span className={styles.percent}>50%</span>
-          </li>
-          <li>
-            <img src="" alt="" />
-            <span className={styles.answer}>ReactJS</span>
-            <span className={styles.percent}>50%</span>
-          </li>
-        </FlipMove>
-        <button>Voltar</button>
+        {false && (
+          <>
+            <hgroup>
+            <Calendar date={new Date()} className={styles.calendarWrap}/>
+            <h2>Qual é seu framework web favorito?</h2>
+            </hgroup>
+            <FlipMove className={styles.answersList}>
+              <li className={styles.active}>
+                <img src="" alt="" />
+                <span className={styles.answer}>ReactJS</span>
+                <span className={styles.percent}>50%</span>
+              </li>
+              <li>
+                <img src="" alt="" />
+                <span className={styles.answer}>ReactJS</span>
+                <span className={styles.percent}>50%</span>
+              </li>
+              <li>
+                <img src="" alt="" />
+                <span className={styles.answer}>ReactJS</span>
+                <span className={styles.percent}>50%</span>
+              </li>
+            </FlipMove>
+            <button>Voltar</button>
+          </>
+        )}
+
         {false && <Loading />}
       </div>
       <Footer />
