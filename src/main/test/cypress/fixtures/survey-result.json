@@ -1,0 +1,21 @@
+{
+  "question": "Question 1",
+  "date": "2022-10-03T00:00:00",
+  "didAnswer": true,
+  "answers": [
+    {
+      "image": "any_image",
+      "answer": "any_answer",
+      "count": 2,
+      "percent": 70,
+      "isCurrentAccountAnswer": true
+    },
+    {
+      "image": "any_image_2",
+      "answer": "any_answer",
+      "count": 1,
+      "percent": 30,
+      "isCurrentAccountAnswer": false
+    }
+  ]
+}
