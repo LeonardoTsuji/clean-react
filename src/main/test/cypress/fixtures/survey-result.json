@@ -1,5 +1,5 @@
 {
-  "question": "Question 1",
+  "question": "Question",
   "date": "2022-10-03T00:00:00",
   "didAnswer": true,
   "answers": [
@@ -11,7 +11,6 @@
       "isCurrentAccountAnswer": true
     },
     {
-      "image": "any_image_2",
       "answer": "any_answer",
       "count": 1,
       "percent": 30,
