@@ -50,22 +50,23 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
     try {
-      if (state.loading || errorState.isFormInvalid) return
-      setState({
-        ...state,
+      setState(old => ({
+        ...old,
         loading: true
-      })
+      }))
+      if (state.loading || errorState.isFormInvalid) return
       const account = await authentication.auth({ email: state.email, password: state.password })
       setCurrentAccount(account)
       navigate('/', {
         replace: true
       })
     } catch (error) {
-      setState({
-        ...state,
-        loading: false
-      })
       setErrorState(old => ({ ...old, main: error.message }))
+    } finally {
+      setState(old => ({
+        ...old,
+        loading: false
+      }))
     }
   }
 
@@ -75,8 +76,8 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
       <FormContext.Provider value={{ state, errorState, setState, setErrorState }}>
         <form data-testid='form' className={styles.form} onSubmit={handleSubmit}>
           <h2>Login</h2>
-          <Input type='email' name='email' placeholder='Digite seu e-mail'/>
-          <Input type='password' name='password' placeholder='Digite sua senha'/>
+          <Input type='email' name='email' placeholder='Digite seu e-mail' />
+          <Input type='password' name='password' placeholder='Digite sua senha' />
           <SubmitButton text='Entrar' />
           <Link data-testid='signup-link' to='/signup' className={styles.link}>Criar conta</Link>
           <FormStatus />

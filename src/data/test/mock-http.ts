@@ -1,40 +1,27 @@
 import { faker } from '@faker-js/faker'
-import { HttpPostClient, HttpPostParams, HttpResponse, HttpStatusCode, HttpGetClient, HttpGetParams } from '@/data/protocols/http'
+import { HttpClient, HttpRequest, HttpResponse, HttpStatusCode } from '@/data/protocols/http'
 
-export const mockPostRequest = (): HttpPostParams => ({
+export const mockHttpRequest = (): HttpRequest => ({
   url: faker.internet.url(),
-  body: faker.company.name()
+  body: faker.company.name(),
+  headers: faker.company.name(),
+  method: faker.helpers.arrayElement(['POST', 'GET', 'PUT', 'DELETE'])
 })
 
-export const mockGetRequest = (): HttpGetParams => ({
-  url: faker.internet.url(),
-  headers: faker.company.name()
-})
-
-export class HttpPostClientSpy<ResponseType = any> implements HttpPostClient<ResponseType> {
+export class HttpClientSpy<ResponseType = any> implements HttpClient<ResponseType> {
   url?: string
+  method?: string
   body?: any
-  response: HttpResponse<ResponseType> = {
-    statusCode: HttpStatusCode.ok
-  }
-
-  async post ({ url, body }: HttpPostParams): Promise<HttpResponse<ResponseType>> {
-    this.url = url
-    this.body = body
-    return this.response
-  }
-}
-
-export class HttpGetClientSpy<ResponseType = any> implements HttpGetClient<ResponseType> {
-  url: string
   headers?: any
   response: HttpResponse<ResponseType> = {
     statusCode: HttpStatusCode.ok
   }
 
-  async get (params: HttpGetParams): Promise<HttpResponse<ResponseType>> {
-    this.url = params.url
-    this.headers = params.headers
+  async request ({ url, body, method, headers }: HttpRequest): Promise<HttpResponse<ResponseType>> {
+    this.url = url
+    this.method = method
+    this.body = body
+    this.headers = headers
     return this.response
   }
 }

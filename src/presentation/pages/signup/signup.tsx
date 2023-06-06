@@ -59,11 +59,11 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
     try {
-      if (state.loading || errorState.isFormInvalid) return
-      setState({
-        ...state,
+      setState(old => ({
+        ...old,
         loading: true
-      })
+      }))
+      if (state.loading || errorState.isFormInvalid) return
       const account = await addAccount.add({
         name: state.name,
         email: state.email,
@@ -75,11 +75,12 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
         replace: true
       })
     } catch (error) {
-      setState({
-        ...state,
-        loading: false
-      })
       setErrorState(old => ({ ...old, main: error.message }))
+    } finally {
+      setState(old => ({
+        ...old,
+        loading: false
+      }))
     }
   }
 
@@ -89,10 +90,10 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
       <Context.Provider value={{ state, setState, errorState, setErrorState }}>
         <form data-testid='form' className={styles.form} onSubmit={handleSubmit}>
           <h2>Criar Conta</h2>
-          <Input type='text' name='name' placeholder='Digite seu nome'/>
-          <Input type='email' name='email' placeholder='Digite seu e-mail'/>
-          <Input type='password' name='password' placeholder='Digite sua senha'/>
-          <Input type='password' name='passwordConfirmation' placeholder='Repita sua senha'/>
+          <Input type='text' name='name' placeholder='Digite seu nome' />
+          <Input type='email' name='email' placeholder='Digite seu e-mail' />
+          <Input type='password' name='password' placeholder='Digite sua senha' />
+          <Input type='password' name='passwordConfirmation' placeholder='Repita sua senha' />
           <SubmitButton text='Cadastrar' />
           <Link data-testid='login-link' to='/login' className={styles.link}>Voltar para Login</Link>
 
