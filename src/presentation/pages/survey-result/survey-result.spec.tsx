@@ -23,9 +23,9 @@ const makeSut = (loadSurveyResultSpy = new LoadSurveyResultSpy()): SutTypes => {
   render(
     <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock, getCurrentAccount: () => mockAccountModel() }}>
       <Router location={history.location} navigator={history}>
-        <SurveyResult loadSurveyResult={loadSurveyResultSpy}/>
+        <SurveyResult loadSurveyResult={loadSurveyResultSpy} />
       </Router>
-  </ApiContext.Provider>
+    </ApiContext.Provider>
   )
   return {
     loadSurveyResultSpy,
@@ -121,6 +121,17 @@ describe('SurveyResult Component', () => {
       screen.getByTestId('survey-result')
       fireEvent.click(screen.getByTestId('back-button'))
       expect(history.location.pathname).toBe('/')
+    })
+  })
+
+  test('Should not present Loading on active answer click', async () => {
+    makeSut()
+
+    await waitFor(() => {
+      screen.getByTestId('survey-result')
+      const answersWrap = screen.queryAllByTestId('answer-wrap')
+      fireEvent.click(answersWrap[0])
+      expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
     })
   })
 })
