@@ -3,7 +3,7 @@ import * as Http from '../utils/http-mocks'
 
 const path = /surveys/
 
-const mockLoadSuccess = (): void => Http.mockOk(path, 'GET', 'fx:load-survey-result')
+const mockLoadSuccess = (): void => Http.mockOk(path, 'GET', 'load-survey-result.json')
 
 describe('SurveyResult', () => {
   describe('load', () => {
@@ -67,7 +67,7 @@ describe('SurveyResult', () => {
   describe('save', () => {
     const mockUnexpectedError = (): void => Http.mockServerError(path, 'PUT')
     const mockAccessDeniedError = (): void => Http.mockForbiddenError(path, 'PUT')
-    const mockSaveSuccess = (): void => Http.mockOk(path, 'PUT', 'fx:save-survey-result')
+    const mockSaveSuccess = (): void => Http.mockOk(path, 'PUT', 'save-survey-result.json')
 
     beforeEach(() => {
       cy.fixture('account').then(account => {

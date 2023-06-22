@@ -5,11 +5,7 @@ const path = /surveys/
 
 const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET')
 const mockAccessDeniedError = (): void => Http.mockForbiddenError(path, 'GET')
-const mockSuccess = (): void => {
-  cy.fixture('survey-list').then(surveyList => {
-    Http.mockOk(path, 'GET', surveyList)
-  })
-}
+const mockSuccess = (): void => Http.mockOk(path, 'GET', 'survey-list.json')
 
 describe('SurveyList', () => {
   beforeEach(() => {

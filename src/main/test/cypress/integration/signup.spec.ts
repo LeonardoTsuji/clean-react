@@ -7,7 +7,7 @@ import * as Http from '../utils/http-mocks'
 const path = /signup/
 const mockEmailInUseError = (): void => Http.mockForbiddenError(path, 'POST')
 const mockUnexpectedError = (): void => Http.mockServerError(path, 'POST')
-const mockSuccess = (): void => Http.mockOk(path, 'POST', 'fx:account')
+const mockSuccess = (): void => Http.mockOk(path, 'POST', 'account.json')
 
 const populateFields = (): void => {
   cy.getByTestId('name').type(faker.name.fullName())
@@ -89,8 +89,7 @@ describe('SignUp', () => {
     mockSuccess()
     populateFields()
     cy.getByTestId('submit').dblclick()
-    cy.wait('@request')
-    Helper.testHttpCallsCount(1)
+    cy.wait('@request').then(() => Helper.testHttpCallsCount(1))
   })
 
   it('Should not call submit if form is invalid', () => {
