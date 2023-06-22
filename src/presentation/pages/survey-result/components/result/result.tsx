@@ -1,6 +1,5 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import FlipMove from 'react-flip-move'
 import { Calendar } from '@/presentation/components'
 import { LoadSurveyResult } from '@/domain/usecases'
 import { SurveyResultAnswer } from '@/presentation/pages/survey-result/components'
@@ -19,11 +18,9 @@ const Result: React.FC<Props> = ({ surveyResult }: Props) => {
         <Calendar date={surveyResult.date} className={styles.calendarWrap} />
         <h2 data-testid='question'>{surveyResult.question}</h2>
       </hgroup>
-      <FlipMove data-testid='answers' className={styles.answersList}>
-        <>
-          {surveyResult.answers.map((answer) => <SurveyResultAnswer answer={answer} key={answer.answer} />)}
-        </>
-      </FlipMove>
+      <ul data-testid='answers' className={styles.answersList}>
+        {surveyResult.answers.map((answer) => <SurveyResultAnswer answer={answer} key={answer.answer} />)}
+      </ul>
       <button className={styles.button} data-testid='back-button' onClick={() => navigate(-1)}>Voltar</button>
     </>
   )
